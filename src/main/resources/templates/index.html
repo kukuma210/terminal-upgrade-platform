@@ -1,0 +1,156 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>
+        登录资源服务器
+    </title>
+    <script language="javascript" type="text/javascript" src="js/niceforms.js"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="css/niceforms-default.css"/>
+    <link href="css/login.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="Js/jquery-1.4.1.min.js"></script>
+    <script type="text/javascript">
+        if (window != top) {
+            top.location.href = location.href;
+        }
+        LoginController = function () {
+            this.keywordOnBlur = function (obj) {
+                if (obj != null) {
+                    if (obj.value == obj.title || obj.value == '') {
+                        obj.value = obj.title;
+                        obj.style.color = '#999';
+                    }
+                    else {
+                        obj.style.color = '#000';
+                    }
+                }
+            };
+            this.keywordOnFocus = function (obj) {
+                if (obj != null) {
+                    if (obj.value == obj.title) {
+                        obj.value = "";
+                        obj.style.color = '#000';
+                    }
+                    else {
+                        obj.style.color = '#000';
+                    }
+                }
+            };
+            this.reloadImg = function (obj) {
+                var src = obj.src;
+                var pos = src.indexOf('?');
+                if (pos >= 0) {
+                    src = src.substr(0, pos);
+                }
+                var date = new Date();
+                obj.src = src + '?v=' + date.getTime()
+                return false;
+            };
+            this.checkInfo = function () {
+                var uid = $("#txtUserName").val();
+                var pwd = $("#txtPwd").val();
+                var verifycode = $("#txtVerifyCode").val();
+
+                uid = uid.replace(/(^\s*)|(\s*$)/g, "");
+                pwd = pwd.replace(/(^\s*)|(\s*$)/g, "");
+                verifycode = verifycode.replace(/(^\s*)|(\s*$)/g, "");
+
+                if (uid == "" || uid == '请输入会员账号') {
+
+                    $("#txtUserName").focus();
+                    this.Inilblinfo('账号不能为空');
+                    return false;
+                }
+                if (pwd == "") {
+                    $("#txtPwd").focus();
+                    this.Inilblinfo('密码不能为空');
+                    return false;
+                }
+                if (verifycode == "") {
+                    $("#txtVerifyCode").focus();
+                    this.Inilblinfo('验证码不能为空');
+                    return false;
+                }
+
+                return true;
+            };
+            this.Inilblinfo = function (val) {
+                $("#lblInfo").text(val);
+            }
+        }
+
+        $(document).ready(function () {
+            window.loginController = new LoginController();
+            var $txtUserName = $("#txtUserName");
+            var $txtPwd = $("#txtPwd");
+            var $imgVerifyCode = $("#imgVerifyCode");
+            var $btnSubmit = $("#btnLogin");
+            $txtUserName.bind({
+                focus: function (obj) {
+                    loginController.keywordOnFocus(this);
+                },
+                blur: function (obj) {
+                    loginController.keywordOnBlur(this);
+                }
+            });
+            $btnSubmit.bind("click", function () {
+                return loginController.checkInfo();
+            });
+            $imgVerifyCode.bind("click", function () {
+                loginController.reloadImg(this);
+            });
+
+            $txtUserName.attr("placeholder", '请输入账号');
+            $txtUserName.focus();
+        });
+    </script>
+</head>
+<body>
+<form method="post" action="/main"  id="formlogin" onsubmit="return checkInfo()"
+      class="niceform">
+    <div class="logintab">
+        <div class="loginimg">
+            <img src="images/logo.png" title="深圳新元素"/></div>
+        <div class="loginform">
+            <p class="tit">
+                <img src="images/login_sjtit.gif"/></p>
+            <p>
+                <label>
+                    用户名：</label>
+                <input name="txtUserName" type="text" id="txtUserName"/>
+            </p>
+            <p>
+                <label>
+                    密码：</label>
+                <input name="txtPwd" type="password" id="txtPwd"/>
+            </p>
+            <p>
+                <label>
+                    验证码：</label>
+                <input name="txtVerifyCode" type="text" maxlength="4" id="txtVerifyCode" class="inputtext"
+                       autocomplete="off"/>
+            </p>
+            <p class="yz">
+                <img id="imgVerifyCode" align="absmiddle" src="/getVerifyCodeImage"/>
+                <a>点击换一张</a></p>
+            <p class="cw">
+                <span id="lblInfo"></span>
+            </p>
+            <p class="rmb" style="display: none;">
+                <input id="chkPersistent" type="checkbox" name="chkPersistent"/>保持登录状态</p>
+            <p class="bt">
+                    <input type="image" name="btnLogin" id="btnLogin" onmouseover="this.src='images/bt2.gif'"
+                           onmouseout="this.src='images/bt3.gif'" src="images/bt1.gif"
+                           onclick="btnLogin"/>
+            </p>
+        </div>
+        <div class="foot">
+            copyright &copy; 2017 深圳市新元素医疗技术开发有限公司<br/>
+            24小时客服服务电话：400-8810-333
+        </div>
+    </div>
+    <div class="l_bg">
+        <img src="images/lbg.gif"/>
+    </div>
+</form>
+</body>
+</html>

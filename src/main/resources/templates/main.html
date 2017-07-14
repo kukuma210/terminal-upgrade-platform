@@ -1,0 +1,150 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>部署升级策略</title>
+    <link href="css/base.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" media="all" href="css/niceforms-default.css" />
+    <link type="text/css" rel="Stylesheet" href="css/jquery-ui-1.8.11.custom.css" />
+    <script language="javascript" type="text/javascript" src="js/niceforms.js"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery-1.4.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+    <script src="js/common.js" type="text/javascript"></script>
+    <script src="js/jquery-ui-1.8.11.custom.min.js" type="text/javascript"></script>
+    <script src="js/jquery.bgiframe.js" type="text/javascript"></script>
+    <script src="js/DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        pageController = function () {
+            this.menuLinks = [];
+            this.init = function (menuLinks) {
+                this.menuLinks = menuLinks;
+                $("#popDiv").dialog({
+                    bgiframe: true,
+                    draggable: false,
+                    autoOpen: false,
+                    modal: true,
+                    width: 450,
+                    height: 200,
+                    autoHeight: true,
+                    closeOnEscape: false
+                });
+            };
+            this.target = $("#main_frame");
+            this.loadPage = function (url) {
+                if (url != null &amp;&amp; url != undefined) {
+                    this.target.attr("src", url);
+                }
+            };
+            this.getUrl = function (key) {
+                return this.menuLinks[key];
+            };
+            this.showDialog = function () {
+                $("#divFrame").attr("src", "");
+                $("#divFrame").attr("src", "pages/ChangePassword.aspx?Date=" + new Date());
+                $("#popDiv").dialog("open");
+            };
+            this.closeDialog = function () {
+                $("#popDiv").dialog("close");
+            };
+            this.bindMenuEvent = function (links) {
+                var currentInstance = this;
+                $.each(links, function (obj, index) {
+                    $(this).bind("click", function () {
+                        currentInstance.loadPage(currentInstance.getUrl($(this).attr("id")));
+                        $(this).parent().parent().find("li").removeClass("current");
+                        $(this).parent().addClass("current");
+                        return false;
+                    });
+                });
+                $("#btnModifyPassword").bind("click", function () {
+                    currentInstance.showDialog();
+                });
+            };
+        }
+        $(document).ready(function () {
+            var menuLinks = {};
+            menuLinks.StgManager = "pages/StgManager";
+            menuLinks.UserManager = "pages/UserManager";
+            menuLinks.PlatFormManager = "pages/PlatFormManager";
+
+            window.controller = new pageController();
+            window.controller.init(menuLinks);
+
+            var links = $(".up_menu a");
+            window.controller.bindMenuEvent(links);
+
+            try {
+                links[0].click();
+            }
+            catch (e) {
+            }
+        });
+        //公共Alert方法 用于操作结果提醒
+        xysalert = function (msg, title, width, height, url) {
+
+            if (width == null || width == '' || width == 0) {
+                width = 400;
+            }
+            $("<div>" + msg + "</div>").dialog({
+                modal: true,
+                bgiframe: true,
+                resizable: false,
+                title: title,
+                width: width,
+                draggable: false,
+                zindex: 9999,
+                autoHeight: true,
+                buttons: {
+                    'Remp_true': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+            if (typeof (url) != "undefined" &amp;&amp; url != null &amp;&amp; url != "") {
+                $("#main_frame").attr("src", url);
+            }
+            return false;
+            //alert(msg);
+        }
+        function closeDialog() {
+            window.controller.closeDialog();
+        }
+    </script>
+</head>
+<body>
+<form id="form1" runat="server">
+    <div class="up_top">
+        <div class="up_logo">
+            <img src="images/c_logo.png" title="新元素" /></div>
+        <div class="up_top_admin">
+            <li class="left"></li>
+            <li class="name">欢迎您！<span id="lblUserName">Admin</span></li>
+            <li class="line"></li>
+            <li class="zx"><a href="#" id="btnModifyPassword" onclick="">修改密码</a></li>
+            <li class="line"></li>
+            <li class="zx">
+                <a id="lbLogout" href="javascript:__doPostBack('lbLogout','')">注销</a></li>
+            <li class="right"></li>
+        </div>
+    </div>
+    <div class="up_menu">
+        <ul>
+            <li id="listUserManager" runat="server"><a class="current" href="#" id="UserManager">
+                <span>用户管理</span></a></li>
+            <li class="line"></li>
+            <li><a href="/AddUpgradeFile" id="StgManager"><span>部署升级策略</span></a></li>
+            <li class="line"></li>
+            <li><a href="#" id="PlatFormManager"><span>平台版本管理</span></a></li>
+            <li class="line"></li>
+        </ul>
+    </div>
+    <div class="up_list">
+        <iframe id="main_frame" name="mainFrame" scrolling='no' width='100%' height='100%'
+                frameborder="no"></iframe>
+    </div>
+    <div id="popDiv" title="修改密码">
+        <iframe id="divFrame" scrolling='no' width='100%' height='100%' frameborder="no">
+        </iframe>
+    </div>
+</form>
+</body>
+</html>

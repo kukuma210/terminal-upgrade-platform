@@ -1,0 +1,109 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnAdd").bind("click", function () {
+                $("#divFrame").attr("src", "AddUser.aspx?time=" + new Date());
+                $("#popDiv").dialog("open");
+            });
+
+            $("#popDiv").dialog({
+                bgiframe: true,
+                draggable: false,
+                autoOpen: false,
+                modal: true,
+                width: 550,
+                height: 300,
+                autoHeight: true,
+                closeOnEscape: false
+            });
+
+            $("#<%=btnDel.ClientID%>").click(function () {
+                var msg = '<%=GetResourceString("Remp_PleaseSelect")%>';
+                var gridId = '<%=gvDoctorList.ClientID %>';
+                if (checkIsSelected(gridId, msg)) {
+                    return xysconfirm('<%=btnDel.UniqueID%>', '<%=GetResourceString("Remp_ConfirmDelete") %>', '<%=GetResourceString("Remp_Notice") %>', 300, 140);
+                }
+                else {
+                    return false;
+                }
+            })
+
+            var elem = $("[name='chk']");
+            for (var i = 0; i < elem.length; i++) {
+                if (elem[i].value == 1) {
+                    elem[i].disabled = true;
+                }
+            }
+
+        });
+        function closeDiv() {
+            $("#popDiv").dialog("close");
+        }
+
+    </script>
+</head>
+<body>
+    <div class="up_search">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td class="label">
+                                管理员姓名：
+                            </td>
+                            <td class="input">
+                                <input name="ctl00$ContentPlaceHolder1$txtUserName" id="ContentPlaceHolder1_txtUserName" style="width:100px;" type="text">
+                            </td>
+                            <td class="label">
+                                <input name="ctl00$ContentPlaceHolder1$btnSearch" class="button" id="ContentPlaceHolder1_btnSearch" onclick='javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions("ctl00$ContentPlaceHolder1$btnSearch", "", true, "", "", false, false))' type="submit" value="查询">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="but">
+                    <input id="btnAdd" type="button" class="button" value="新 增" />
+                    <input name="ctl00$ContentPlaceHolder1$btnDel" class="button" id="ContentPlaceHolder1_btnDel" onclick='javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions("ctl00$ContentPlaceHolder1$btnDel", "", true, "", "", false, false))' type="submit" value="删除">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="up_list">
+        <table class="tab_list" id="ContentPlaceHolder1_gvDoctorList" style="border-style:Solid;width:100%;border-collapse:collapse;word-break:break-all;word-wrap:break-word" border="1" rules="all" cellspacing="0">
+            <tbody>
+            <tr class="header" style="background-image:url('/WebResource.axd?d=qQ5-Ner0jp-fnepVOEqe-UC1RN-Cc3t9aZc9nZKWSIcouXPxMyJ-FXBqvgNNjvrFn5O4AjZurTjhBW4Gu0DSiiP7_8azAZJ7Jrn_zq2UIDhRsjZQ89usgOLOtULkAHu0XuvlV-HEf3Y_TzXiObACWoTK_ELjxsCMZ9ShRJHCec81&amp;t=635255646300000000')">
+                <th class="check" style="width:30px;" scope="col">
+                    <input onclick="selectAll(this,'ContentPlaceHolder1_gvDoctorList')" type="checkbox">
+                </th>
+                <th scope="col">管理员帐号</th>
+                <th scope="col">管理员姓名</th>
+                <th style="width:40px;" scope="col">性别</th>
+                <th style="width:95px;" scope="col">重置密码</th>
+            </tr><tr class="aspNetDisabled normal" onmouseover="c=this.className;this.className='hover'" onmouseout="this.className=c">
+                <td class="check">
+                    <input name="chk" disabled="" type="checkbox" value="1">
+                </td><td>admin</td><td>Admin</td><td>
+                女
+            </td><td>
+                <a id="ContentPlaceHolder1_gvDoctorList_lbtPassword_0">重置密码</a>
+            </td>
+            </tr>
+            <tr>
+                <td style="border-width:0px;" colspan="5"><table style="width:100%;">
+                    <tbody><tr>
+                        <td style="border-width:0px;width:50%;white-space:nowrap;text-align:left;">&nbsp;&nbsp;页次:1/1&nbsp;&nbsp;总计:1&nbsp;项</td><td style="border-width:0px;width:50%;white-space:nowrap;text-align:right;"><a class="aspNetDisabled" style="text-decoration:none;">首页</a>&nbsp;&nbsp;<a class="aspNetDisabled" style="text-decoration:none;">上页</a>&nbsp;&nbsp;<a class="aspNetDisabled" style="text-decoration:none;">下页</a>&nbsp;&nbsp;<a class="aspNetDisabled" style="text-decoration:none;">末页</a>&nbsp;&nbsp;转到&nbsp;&nbsp;<input name="ctl00$ContentPlaceHolder1$gvDoctorList$ctl04$ctl05" id="ContentPlaceHolder1_gvDoctorList_ctl05" style="width:25px;" type="text" value="1">&nbsp;&nbsp;<span>页</span>&nbsp;&nbsp;<input name="ctl00$ContentPlaceHolder1$gvDoctorList$ctl04$ctl06" class="button" onclick="return checkNum(ContentPlaceHolder1_gvDoctorList_ctl05,1,'页码错误','页码不能为空','页码必须为正整数','输入的页码不能大于总页数');WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ContentPlaceHolder1$gvDoctorList$ctl04$ctl06&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" type="submit" value="跳转"></td>
+                    </tr>
+                    </tbody>
+                </table></td>
+            </tr>
+
+            </tbody></table>
+    </div>
+    <div id="popDiv" title="新增管理员">
+        <iframe id="divFrame" scrolling='no' width='100%' height='100%' frameborder="0" frameborder="no">
+        </iframe>
+    </div>
+</body>
+</html>
