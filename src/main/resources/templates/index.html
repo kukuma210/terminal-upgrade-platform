@@ -46,6 +46,7 @@
                 return false;
             };
             this.checkInfo = function () {
+
                 var uid = $("#txtUserName").val();
                 var pwd = $("#txtPwd").val();
                 var verifycode = $("#txtVerifyCode").val();
@@ -71,12 +72,39 @@
                     return false;
                 }
 
-                return true;
+                //前端初步判断数据类型成功以后向后台发出请求来判断登陆是否成功
+                $.ajax({
+                    type: "get",
+                    url: "/login",
+                    dataType: "json",
+                    data: $('#formlogin').serialize(),
+                    success: function (data) {
+                        if (data) {
+                            if (data.msgCode == 0) {
+                                location.href = "/main"
+                            }
+                            else if ( data.msg) {
+                                $("#lblInfo").text(data.msg);
+                            }
+                        }
+                        else {
+                            $("#lblInfo").text("请求失败！");
+                        }
+                    },
+                    error: function () {
+                        $("#lblInfo").text("请求失败！");
+                    }
+                });
+
+                return false;
             };
+
             this.Inilblinfo = function (val) {
                 $("#lblInfo").text(val);
             }
+
         }
+
 
         $(document).ready(function () {
             window.loginController = new LoginController();
@@ -105,8 +133,7 @@
     </script>
 </head>
 <body>
-<form method="post" action="/main"  id="formlogin" onsubmit="return checkInfo()"
-      class="niceform">
+<form id="formlogin" class="niceform" onsubmit="return false;">
     <div class="logintab">
         <div class="loginimg">
             <img src="images/logo.png" title="深圳新元素"/></div>
@@ -138,9 +165,8 @@
             <p class="rmb" style="display: none;">
                 <input id="chkPersistent" type="checkbox" name="chkPersistent"/>保持登录状态</p>
             <p class="bt">
-                    <input type="image" name="btnLogin" id="btnLogin" onmouseover="this.src='images/bt2.gif'"
-                           onmouseout="this.src='images/bt3.gif'" src="images/bt1.gif"
-                           onclick="btnLogin"/>
+                <input type="image" name="btnLogin" id="btnLogin" onmouseover="this.src='images/bt2.gif'"
+                       onmouseout="this.src='images/bt3.gif'" src="images/bt1.gif"/>
             </p>
         </div>
         <div class="foot">

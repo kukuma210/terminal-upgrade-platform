@@ -29,7 +29,7 @@ public class MainController {
 
   private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
-    @GetMapping("/")
+    @RequestMapping("/")
     public ModelAndView index()
     {
         ModelAndView  mv = new ModelAndView("index");
@@ -44,25 +44,18 @@ public class MainController {
         return  mv;
     }
 
-    @GetMapping("/test")
-    public ModelAndView  test()
+    @RequestMapping("/main")
+    public ModelAndView login()
     {
-        ModelAndView  mv = new ModelAndView("test");
 
-        return  mv;
-    }
-
-    @PostMapping("/main")
-    public ModelAndView login(HttpSession session, HttpServletRequest request, HttpServletResponse response)
-    {
-        ModelAndView v = new ModelAndView("main") ;
+       ModelAndView v = new ModelAndView("main") ;
         return v;
     }
 
     @RequestMapping("/AddUpgradeFile")
     public ModelAndView addUpgradeFile()
     {
-        ModelAndView v = new ModelAndView("/pages/AddUpgradeFile") ;
+        ModelAndView v = new ModelAndView("pages/AddUpgradeFile") ;
         return v;
     }
 
