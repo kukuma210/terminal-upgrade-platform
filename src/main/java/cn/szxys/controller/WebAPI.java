@@ -1,7 +1,7 @@
 package cn.szxys.controller;
 
 
-import bean.Result;
+import cn.szxys.bean.Result;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

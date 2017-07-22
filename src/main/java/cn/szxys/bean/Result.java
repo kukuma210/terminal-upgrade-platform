@@ -1,4 +1,4 @@
-package bean;
+package cn.szxys.bean;
 
 /**
  * Created by Administrator on 2017/7/20.
