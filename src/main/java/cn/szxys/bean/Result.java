@@ -1,4 +1,4 @@
-package bean;
+package cn.szxys.bean;
 
 /**
  * Created by Administrator on 2017/7/20.
@@ -8,6 +8,21 @@ public class Result<T> {
     String msg;
     T Data;
 
+    public Result(){
+        msgCode = -1;
+        msg = "error";
+    }
+
+    public void  setOK(){
+        msg="ok";
+        msgCode = 0;
+    }
+
+    public void setError(int iCode,String sMsg)
+    {
+        msg =sMsg;
+        msgCode = iCode;
+    }
     public T getData() {
         return Data;
     }

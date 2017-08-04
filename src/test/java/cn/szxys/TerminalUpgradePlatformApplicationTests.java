@@ -1,8 +1,12 @@
 package cn.szxys;
 
 import cn.szxys.Entity.UserEntity;
+import cn.szxys.bean.Result;
+import cn.szxys.bean.WxAPIToken;
 import cn.szxys.mapper.UserMapper;
 import cn.szxys.pub.UserSexEnum;
+import cn.szxys.tools.HttpClientUtil;
+import com.alibaba.fastjson.JSON;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,15 +28,22 @@ public class TerminalUpgradePlatformApplicationTests {
 	@Autowired(required = false)
 	private UserMapper um;
 
-//	@Test
-//	public void testInsert() throws Exception {
-//		um.insert(new UserEntity("aa", "a123456", UserSexEnum.MAN));
-//		um.insert(new UserEntity("bb", "b123456", UserSexEnum.WOMAN));
-//		um.insert(new UserEntity("cc", "b123456", UserSexEnum.WOMAN));
-//
-//		Assert.assertEquals(3, um.getAll().size());
-//	}
-//
+	@Test
+	public void testInsert() throws Exception {
+
+
+		String data = "{\"access_token\":\"CDjkZB2Kk4IIr_Bv6ADJ2H2Orj8BzMawv-_jpJneu8D" +
+				"3NM8eVn7W1eByIJFXsCkRHdarRLx6m0KxOwrwZF2K71DsKPoMAj3BgJEem8oEUyrRNO-3" +
+				"MEije3cDiWpT84nKQEDaACAIWV\",\"expires_in\":7200}";
+
+		WxAPIToken token = (WxAPIToken) JSON.parseObject(data,WxAPIToken.class);
+
+		Result<WxAPIToken> res = new Result<WxAPIToken>();
+
+		res.setData(token);
+
+	}
+
 //	@Test
 //	public void testQuery() throws Exception {
 //		List<UserEntity> users = um.getAll();
