@@ -4,15 +4,24 @@ package cn.szxys.bean;
  * Created by Administrator on 2017/8/4.
  */
 public class WxBuyTemplateMsg {
-    int formID;
+    String xysSessionID;
+    String formID;
     String title;
     String content;
 
-    public int getFormID() {
+    public String getXysSessionID() {
+        return xysSessionID;
+    }
+
+    public void setXysSessionID(String xysSessionID) {
+        this.xysSessionID = xysSessionID;
+    }
+
+    public String getFormID() {
         return formID;
     }
 
-    public void setFormID(int formID) {
+    public void setFormID(String formID) {
         this.formID = formID;
     }
 

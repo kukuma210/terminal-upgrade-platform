@@ -73,4 +73,13 @@ public class MainController {
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         return new ResponseEntity<byte[]>(out.toByteArray(),headers,HttpStatus.CREATED);
     }
+
+    @RequestMapping("/test")
+    public ModelAndView testPage()
+    {
+        ModelAndView  v = new ModelAndView("pages/test");
+
+        return v;
+    }
+
 }
