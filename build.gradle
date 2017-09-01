@@ -32,6 +32,7 @@ dependencies {
 	compile("org.apache.httpcomponents:httpmime:4.5.3")
 	compile("com.alibaba:fastjson:1.2.35")
 	compile('org.springframework.boot:spring-boot-starter-cache')
+	compile('org.springframework.boot:spring-boot-starter-aop')
 	compile('org.springframework.boot:spring-boot-starter-data-redis')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	runtime('org.springframework.boot:spring-boot-devtools')

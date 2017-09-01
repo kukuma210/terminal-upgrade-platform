@@ -1,8 +1,10 @@
 package cn.szxys.bean;
 
 import cn.szxys.security.SecurityUtil;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.xml.crypto.Data;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,12 +14,24 @@ import java.util.Map;
  * Created by Administrator on 2017/8/7.
  */
 public class XysSession {
+
     private String  sessionID;
     private String  wxCode;
     private String  wxSessionKey;
     private String wxOpenID;
     private String wxUnionID;
     private long  expireTime;
+
+    public long getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(long expireTime) {
+        this.expireTime = expireTime;
+    }
+
+    public XysSession() {
+    }
 
     public XysSession(String wxCode, String wxSessionKey, String wxOpenID, String wxUnionID) {
         this.wxCode = wxCode;
@@ -30,11 +44,6 @@ public class XysSession {
         param.put("wxCode",wxCode);
         param.put("timeStamp",""+Calendar.getInstance().getTimeInMillis());
         this.sessionID = SecurityUtil.generateToken(param);
-    }
-
-    public boolean isSessionExpire()
-    {
-        return Calendar.getInstance().getTimeInMillis()/1000 - expireTime > 0 ;
     }
 
     public String getSessionID() {
