@@ -52,26 +52,11 @@ public class MainController {
         return v;
     }
 
-    @RequestMapping("/AddUpgradeFile")
+    @RequestMapping("/addUpgradeFile")
     public ModelAndView addUpgradeFile()
     {
         ModelAndView v = new ModelAndView("pages/AddUpgradeFile") ;
         return v;
-    }
-
-    @GetMapping("/getVerifyCodeImage")
-    public ResponseEntity<byte[]> getVerifyCodeImage()
-    {
-        SCaptcha sc = new SCaptcha();
-        ByteArrayOutputStream out= new ByteArrayOutputStream();
-        try {
-            sc.write(out);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        HttpHeaders headers=new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        return new ResponseEntity<byte[]>(out.toByteArray(),headers,HttpStatus.CREATED);
     }
 
     @RequestMapping("/test")

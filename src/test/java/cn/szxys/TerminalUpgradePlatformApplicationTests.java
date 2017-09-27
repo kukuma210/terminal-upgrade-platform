@@ -79,20 +79,20 @@ public class TerminalUpgradePlatformApplicationTests {
 //		}
 
 
-//	@Test
-//	public void testQuery() throws Exception {
-//		List<UserEntity> users = um.getAll();
-//		System.out.println(users.toString());
-//	}
-//
-//	@Test
-//	public void testUpdate() throws Exception {
-//		UserEntity user = um.getOne(Long.valueOf(16));
-//		System.out.println(user.toString());
-//		user.setUserName("neo");
-//		um.update(user);
-//		Assert.assertTrue(("neo".equals(um.getOne(Long.valueOf(16)).getUserName())));
-//	}
+	@Test
+	public void testQuery() throws Exception {
+		List<UserEntity> users = um.getAll();
+		System.out.println(users.toString());
+	}
+
+	@Test
+	public void testUpdate() throws Exception {
+		UserEntity user = um.getOne(Long.valueOf(16));
+		System.out.println(user.toString());
+		user.setUserName("neo");
+		um.update(user);
+		Assert.assertTrue(("neo".equals(um.getOne(Long.valueOf(16)).getUserName())));
+	}
 
 
 }

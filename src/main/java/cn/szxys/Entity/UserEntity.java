@@ -10,12 +10,12 @@ public class UserEntity {
 
     @Override
     public String toString() {
-        return "UserEntity{" +
+        return "{UserEntity:{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", passWord='" + passWord + '\'' +
                 ", userSex=" + userSex +
-                '}';
+                "}}";
     }
 
     public UserEntity(String userName, String passWord, UserSexEnum userSex) {
@@ -55,8 +55,8 @@ public class UserEntity {
         this.userSex = userSex;
     }
 
-    Long id;
-    String userName;
-    String passWord;
-    UserSexEnum userSex;
+    private  Long id;
+    private String passWord;
+    private String userName;
+    private UserSexEnum userSex;
 }

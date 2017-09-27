@@ -4,23 +4,30 @@ package cn.szxys.controller;
 import cn.szxys.bean.*;
 import cn.szxys.security.SessionManager;
 import cn.szxys.tools.HttpClientUtil;
+import cn.szxys.tools.SCaptcha;
 import com.alibaba.fastjson.JSON;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * Created by Administrator on 2017/7/20.
  */
 @RestController
 public class WebAPI {
-
-
 
     @Autowired
     private Environment env;
@@ -42,6 +49,18 @@ public class WebAPI {
         result.setMsg("密码错误！");
 
         return  result;
+    }
+
+    @RequestMapping("/info")
+    public String info(HttpServletRequest request)
+    {
+        return  "终端升级平台";
+    }
+
+    @RequestMapping("/health")
+    public String health(HttpServletRequest request)
+    {
+        return  "我运行正常";
     }
 
     @RequestMapping("/getWXAccessToken")
@@ -69,6 +88,21 @@ public class WebAPI {
         }
 
         return res;
+    }
+
+    @GetMapping("/getVerifyCodeImage")
+    public ResponseEntity<byte[]> getVerifyCodeImage()
+    {
+        SCaptcha sc = new SCaptcha();
+        ByteArrayOutputStream out= new ByteArrayOutputStream();
+        try {
+            sc.write(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HttpHeaders headers=new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(out.toByteArray(),headers, HttpStatus.CREATED);
     }
 
     @RequestMapping("/wxCode2Session")
